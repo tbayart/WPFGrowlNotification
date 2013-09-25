@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:model="clr-namespace:Notificator.Models"
+                    xmlns:ctrl="clr-namespace:Notificator.Controls">
+    <DataTemplate DataType="{x:Type model:Notification}">
+        <Border BorderThickness="{Binding BorderThickness, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                Background="{Binding Background, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                Margin="{Binding Margin, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" Opacity="0.8" BlurRadius="10" />
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Text="{Binding Data}"
+                           Margin="{Binding Padding, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                           Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                           FontFamily="{Binding FontFamily, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                           FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                           FontStretch="{Binding FontStretch, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                           FontStyle="{Binding FontStyle, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                           FontWeight="{Binding FontWeight, RelativeSource={RelativeSource AncestorType=ctrl:NotificationItem}}"
+                           TextWrapping="Wrap"
+                           TextTrimming="CharacterEllipsis" />
+                <ctrl:NotificationCloseButton Grid.Column="1"
+                                              VerticalAlignment="Top"
+                                              Margin="5" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+</ResourceDictionary>

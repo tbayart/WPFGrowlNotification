@@ -1,53 +1,60 @@
 ﻿using System.Windows;
+using WPFGrowlNotification.Models;
 
 namespace WPFGrowlNotification
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : Window
     {
-        private const double topOffset = 20;
-        private const double leftOffset = 380;
-        readonly GrowlNotifiactions growlNotifications = new GrowlNotifiactions();
-        
+        private Notificator.Notificator _notificator;
+
         public MainWindow()
         {
             InitializeComponent();
-            growlNotifications.Top = SystemParameters.WorkArea.Top + topOffset;
-            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - leftOffset;
+            Loaded += MainWindow_Loaded;
+        }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            _notificator = new Notificator.Notificator();
+            _notificator.Owner = this;
         }
 
         private void ButtonClick1(object sender, RoutedEventArgs e)
         {
-            growlNotifications.AddNotification(new Notification { Title = "Mesage #1", ImageUrl = "pack://application:,,,/Resources/notification-icon.png", Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." });
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            growlNotifications.AddNotification(new Notification { Title = "Mesage #2", ImageUrl = "pack://application:,,,/Resources/microsoft-windows-8-logo.png", Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." });
+            _notificator.AddNotification(new Notificator.Models.Notification
+            {
+                Data = "Une simple notification ne contient qu'un message."
+            });
         }
 
         private void ButtonClick2(object sender, RoutedEventArgs e)
         {
-            growlNotifications.AddNotification(new Notification { Title = "Mesage #3", ImageUrl = "pack://application:,,,/Resources/facebook-button.png", Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." });
+            _notificator.AddNotification(new NotificationTitle
+            {
+                Title = "Titre de la notification",
+                Data = "Une notification avec un titre et un message."
+            });
         }
 
         private void ButtonClick3(object sender, RoutedEventArgs e)
         {
-            growlNotifications.AddNotification(new Notification { Title = "Mesage #4", ImageUrl = "pack://application:,,,/Resources/Radiation_warning_symbol.png", Message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." });
+            _notificator.AddNotification(new NotificationImage
+            {
+                ImageUrl = "pack://application:,,,/Resources/Radiation_warning_symbol.png"
+            });
         }
 
-        protected override void OnClosed(System.EventArgs e)
+        private void ButtonClick4(object sender, RoutedEventArgs e)
         {
-            growlNotifications.Close();
-            base.OnClosed(e);
-        }
-
-        private void WindowLoaded1(object sender, RoutedEventArgs e)
-        {
-            //this will make minimize restore of notifications too
-            //growlNotifications.Owner = GetWindow(this);
+            _notificator.AddNotification(new NotificationTitleImage
+            {
+                Title = "Notification avec titre et icône",
+                ImageUrl = "pack://application:,,,/Resources/notification-icon.png",
+                Data = "Exemple de notification plus complète. Cette fois-ci la notification possède un titre et une icône."
+            });
         }
     }
 }
